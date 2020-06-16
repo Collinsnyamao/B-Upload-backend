@@ -41,7 +41,7 @@ router.post('/new', function (req, res) {
         });
 });
 
-router.post('/list', function (req, res){
+router.post('/list', function (req, res) {
     banksModel.find({}, function (err, docs) {
         res.send(docs);
     });

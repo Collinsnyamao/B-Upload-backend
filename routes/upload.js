@@ -105,6 +105,22 @@ function getChecksumValue(filename) {
     })
 }
 
+
+function getBankFolder(bankname) {
+    switch (bankname) {
+        case 'consolidated bank ltd.':
+            return 'consolidated';
+        case 'equity bank ltd.':
+            return 'equity';
+        case 'standard chartered bank.':
+            return 'standard';
+        case 'mpesa statement.':
+            return 'mpesa';
+        default:
+            return 'unsorted';
+    }
+}
+
 /*createChecksum('123.xyz','acd1324sjx','5h5i4494j5','098292','xyz',false);*/
 
 /* GET users listing. */
@@ -184,6 +200,7 @@ router.post('/new', function (req, res) {
 
                     } else {
                         res.send('file exists');
+                        console.log(filename + ' exists');
                     }
 
                 })
@@ -199,24 +216,24 @@ router.post('/new', function (req, res) {
 
 });
 
-router.post('/nifi',function (req,res){
+router.post('/nifi', function (req, res) {
     let ingestionFilename = req.body.filename;
     let ingestionStatus = req.body.status;
 
-    let query = { filename: ingestionFilename };
-    ChecksumModel.findOneAndUpdate({filename : ingestionFilename }, { status: ingestionStatus }, { useFindAndModify: false }, function (err, doc) {
+    let query = {filename: ingestionFilename};
+    ChecksumModel.findOneAndUpdate({filename: ingestionFilename}, {status: ingestionStatus}, {useFindAndModify: false}, function (err, doc) {
         if (err) console.log(err);
         res.send(doc);
     });
 
 });
 
-router.post('/nifiMedia',function (req,res){
+router.post('/nifiMedia', function (req, res) {
     let ingestionFilename = req.body.filename;
     let ingestionStatus = req.body.status;
 
-    let query = { filename: ingestionFilename };
-    ChecksumModel.findOneAndUpdate({filename : ingestionFilename }, { status: ingestionStatus }, { useFindAndModify: false }, function (err, doc) {
+    let query = {filename: ingestionFilename};
+    ChecksumModel.findOneAndUpdate({filename: ingestionFilename}, {status: ingestionStatus}, {useFindAndModify: false}, function (err, doc) {
         if (err) console.log(err);
         res.send(doc);
     });
@@ -224,19 +241,95 @@ router.post('/nifiMedia',function (req,res){
 });
 
 
-router.post('/checker', function (req,res){
+router.post('/checker', function (req, res) {
 
     const user = 'user1';
     let filename = req.body.filename;
-    let filename2 = user+req.body.filename;
+    let filename2 = user + req.body.filename;
 
-    ChecksumModel.findOne({ filename: filename2 }, function(err, result) {
+    ChecksumModel.findOne({filename: filename2}, function (err, result) {
         if (err) {
             res.send(err);
         } else {
             res.send(result);
         }
     });
+});
+
+
+router.post('/financial', function (req, res) {
+
+    const user = 'user1';
+    let bank = req.query['bankname'];
+    console.log(bank);
+
+    const busboy = new Busboy({headers: req.headers});
+    busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+        console.log(fieldname);
+
+        const saveTo = path.join(__dirname, '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + user + filename);
+        console.log(mimetype, encoding, fieldname);
+        file.pipe(fs.createWriteStream(saveTo));
+        busboy.on('finish', function () {
+
+            console.log(filename, 'uploaded');
+
+
+            const hash = crypto.createHash('md5'),
+                stream = fs.createReadStream(__dirname + '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + user + filename);
+
+            stream.on('data', function (data) {
+                hash.update(data, 'utf8')
+            })
+
+            stream.on('end', function () {
+                console.log();
+                let checksumValue = hash.digest('hex');
+                console.log('checksum is', checksumValue);
+
+                ChecksumModel.find({checksum: checksumValue}, function (err, document) {
+
+                    if (err) {
+                        console.log('error');
+                        res.send('error');
+                    }
+
+                    console.log('data size ', document.length);
+
+                    if (document.length === 0) {
+                        console.log('no data found');
+                        let newChecksum = new ChecksumModel({
+                            filename: user + filename,
+                            user: user,
+                            checksum: checksumValue,
+                            dateTime: Date.now(),
+                            extension: mimetype,
+                            status: false
+                        })
+                            .save()
+                            .then(function () {
+                                console.log('saved...');
+                                res.send('file saved');
+                            })
+                            .catch(function (err) {
+                                console.log(err);
+                                res.send('error found ');
+                            });
+
+                    } else {
+                        res.send('file exists');
+                        console.log(filename + ' exists');
+                    }
+
+                })
+
+            });
+
+        });
+    });
+
+
+    return req.pipe(busboy);
 });
 
 /*console.log(crypto.getHashes());*/
