@@ -259,7 +259,7 @@ router.post('/checker', function (req, res) {
 
 router.post('/financial', function (req, res) {
 
-    const user = 'user1';
+    const user = 'user1' + '*';
     let bank = req.query['bankname'];
     console.log(bank);
 

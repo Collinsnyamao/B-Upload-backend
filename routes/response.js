@@ -31,18 +31,18 @@ watcher
             case 'png':
                 movefile(fileFullName, 'media', fileFullName);
                 break;
-            case 'mp4':
+            /*case 'mp4':
                 movefile(fileFullName, 'media', fileFullName);
-                break;
+                break;*/
             case 'jpeg':
                 movefile(fileFullName, 'media', fileFullName);
                 break;
-            case 'mp3':
+            /*case 'mp3':
                 movefile(fileFullName, 'media', fileFullName);
-                break;
-            case 'mov':
+                break;*/
+            /*case 'mov':
                 movefile(fileFullName, 'media', fileFullName);
-                break;
+                break;*/
             case 'csv':
                 movefile(fileFullName, 'csv', fileFullName);
                 break;
@@ -58,18 +58,18 @@ watcher
             case 'xlsx':
                 movefile(fileFullName, 'excel', fileFullName);
                 break;
-            case 'xlsm':
+            /*case 'xlsm':
                 movefile(fileFullName, 'excel', fileFullName);
-                break;
-            case 'xlsb':
+                break;*/
+            /*case 'xlsb':
                 movefile(fileFullName, 'excel', fileFullName);
-                break;
-            case 'xltx':
+                break;*/
+            /*case 'xltx':
                 movefile(fileFullName, 'excel', fileFullName);
-                break;
-            case 'xml':
+                break;*/
+            /*case 'xml':
                 movefile(fileFullName, 'excel', fileFullName);
-                break;
+                break;*/
             case 'doc':
                 movefile(fileFullName, 'text', fileFullName);
                 break;
@@ -85,7 +85,13 @@ watcher
             case 'gz':
                 movefile(fileFullName, 'compressed', fileFullName);
                 break;
+            case 'sql':
+                movefile(fileFullName, 'compressed', fileFullName);
+                break;
             case 'bzip2':
+                movefile(fileFullName, 'compressed', fileFullName);
+                break;
+            case 'pigz':
                 movefile(fileFullName, 'compressed', fileFullName);
                 break;
             default:
