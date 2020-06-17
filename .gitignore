@@ -1,2 +1,7 @@
 # Project exclude paths
 /node_modules/
+/upload/backup/
+/upload/financialMain/
+/upload/financialTemp/
+/upload/main/
+/upload/temp/
