@@ -143,7 +143,7 @@ const upload = multer({storage: storage});
 /*SET STORAGE*/
 
 router.post('/new', function (req, res) {
-    const user = 'user1';
+    const user = 'user1' + '*';
     const time = req.body.time;
 
     const busboy = new Busboy({headers: req.headers});
@@ -243,7 +243,7 @@ router.post('/nifiMedia', function (req, res) {
 
 router.post('/checker', function (req, res) {
 
-    const user = 'user1';
+    const user = 'user1' + '*';
     let filename = req.body.filename;
     let filename2 = user + req.body.filename;
 
@@ -335,5 +335,16 @@ router.post('/financial', function (req, res) {
 /*console.log(crypto.getHashes());*/
 /*console.log(__dirname);*/
 
+router.post('/clearDB', function (req,res){
+    const password = req.body.password;
+    if (password === 'tintin'){
+        ChecksumModel.deleteMany({ }, function (err) {
+            if (err) res.send('not cleared');
+            res.send('cleared')
+        });
+    }else {
+        res.send('wrong password');
+    }
+});
 
 module.exports = router;

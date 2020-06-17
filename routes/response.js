@@ -25,56 +25,40 @@ watcher
         console.log(__dirname);
 
         switch (fileExt) {
+            /*Nifi Mohammed*/
             case 'jpg':
                 movefile(fileFullName, 'media', fileFullName);
                 break;
             case 'png':
                 movefile(fileFullName, 'media', fileFullName);
                 break;
-            /*case 'mp4':
+            case 'pdf':
                 movefile(fileFullName, 'media', fileFullName);
-                break;*/
+                break;
             case 'jpeg':
                 movefile(fileFullName, 'media', fileFullName);
                 break;
-            /*case 'mp3':
+            case 'txt':
                 movefile(fileFullName, 'media', fileFullName);
-                break;*/
-            /*case 'mov':
+                break;
+            case 'doc':
                 movefile(fileFullName, 'media', fileFullName);
-                break;*/
+                break;
+            case 'docx':
+                movefile(fileFullName, 'media', fileFullName);
+                break;
+
+                /*Nifi Mohammed*/
+
+            /*Paul Mohammed*/
             case 'csv':
                 movefile(fileFullName, 'csv', fileFullName);
                 break;
             case 'xls':
                 movefile(fileFullName, 'excel', fileFullName);
                 break;
-            case 'pdf':
-                movefile(fileFullName, 'pdf', fileFullName);
-                break;
-            case 'txt':
-                movefile(fileFullName, 'text', fileFullName);
-                break;
             case 'xlsx':
                 movefile(fileFullName, 'excel', fileFullName);
-                break;
-            /*case 'xlsm':
-                movefile(fileFullName, 'excel', fileFullName);
-                break;*/
-            /*case 'xlsb':
-                movefile(fileFullName, 'excel', fileFullName);
-                break;*/
-            /*case 'xltx':
-                movefile(fileFullName, 'excel', fileFullName);
-                break;*/
-            /*case 'xml':
-                movefile(fileFullName, 'excel', fileFullName);
-                break;*/
-            case 'doc':
-                movefile(fileFullName, 'text', fileFullName);
-                break;
-            case 'docx':
-                movefile(fileFullName, 'text', fileFullName);
                 break;
             case 'bzip':
                 movefile(fileFullName, 'compressed', fileFullName);
@@ -94,8 +78,34 @@ watcher
             case 'pigz':
                 movefile(fileFullName, 'compressed', fileFullName);
                 break;
+
+            /*Paul Mohammed*/
+
+
             default:
                 movefile(fileFullName, 'other', fileFullName);
+            /*case 'mp4':
+                movefile(fileFullName, 'media', fileFullName);
+                break;*/
+
+            /*case 'mp3':
+                movefile(fileFullName, 'media', fileFullName);
+                break;*/
+            /*case 'mov':
+                movefile(fileFullName, 'media', fileFullName);
+                break;*/
+            /*case 'xlsm':
+                movefile(fileFullName, 'excel', fileFullName);
+                break;*/
+            /*case 'xlsb':
+                movefile(fileFullName, 'excel', fileFullName);
+                break;*/
+            /*case 'xltx':
+                movefile(fileFullName, 'excel', fileFullName);
+                break;*/
+            /*case 'xml':
+                movefile(fileFullName, 'excel', fileFullName);
+                break;*/
         }
 
     })

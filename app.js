@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 let cors = require('cors');
 let bodyParser = require('body-parser');
+const https = require('https');
+const fs = require('fs');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -39,6 +41,16 @@ app.use('/banks', banksRouter);
 app.use(function (req, res, next) {
     next(createError(404));
 });
+
+let privateKey  = fs.readFileSync(__dirname+'/certs/localhost.key', 'utf8');
+let certificate = fs.readFileSync(__dirname+'/certs/localhost.cert', 'utf8');
+let credentials = {
+    key: privateKey,
+    cert: certificate,
+    rejectUnauthorized:false
+};
+let httpsServer = https.createServer(credentials, app);
+httpsServer.listen(3002);
 
 // error handler
 app.use(function (err, req, res, next) {
