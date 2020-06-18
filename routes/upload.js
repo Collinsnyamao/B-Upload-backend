@@ -150,6 +150,7 @@ router.post('/new', function (req, res) {
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
 
         const saveTo = path.join(__dirname, '/../upload/temp/' + user + filename);
+        console.log(1);
         console.log(mimetype, encoding, fieldname);
         file.pipe(fs.createWriteStream(saveTo));
         busboy.on('finish', function () {
@@ -159,6 +160,7 @@ router.post('/new', function (req, res) {
 
             const hash = crypto.createHash('md5'),
                 stream = fs.createReadStream(__dirname + '/../upload/temp/' + user + filename);
+            console.log(2);
 
             stream.on('data', function (data) {
                 hash.update(data, 'utf8')

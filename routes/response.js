@@ -10,6 +10,7 @@ function movefile(originFile, destination, filename) {
     fs.rename(__dirname + '/../upload/temp/' + originFile, __dirname + '/../upload/main/' + destination + '/' + filename, (err) => {
         if (err) throw err;
         console.log('Rename complete!');
+        console.log(3);
     });
 }
 
