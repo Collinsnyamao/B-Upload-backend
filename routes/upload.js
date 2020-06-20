@@ -144,13 +144,20 @@ const upload = multer({storage: storage});
 
 router.post('/new', function (req, res) {
     const user = 'user1' + '*';
-    /*const userid = req.body.userID;
-    console.log('this user: ' + userid);*/
+    const userID = req.headers.id;
+    const userfile = req.body.fileWrite;
+    console.log(userID);
 
     const busboy = new Busboy({headers: req.headers});
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+        console.log('new file is ' + userID+ filename);
 
-        const saveTo = path.join(__dirname, '/../upload/temp/' + user + filename);
+        let ext = "." + filename.toLowerCase().split('.').pop();
+        console.log('ext',ext)
+        let setFileName = userID+ext;
+        console.log('new name ', setFileName)
+
+        const saveTo = path.join(__dirname, '/../upload/temp/' + setFileName);
         console.log(1);
         console.log(mimetype, encoding, fieldname);
         file.pipe(fs.createWriteStream(saveTo));
@@ -160,7 +167,7 @@ router.post('/new', function (req, res) {
 
 
             const hash = crypto.createHash('md5'),
-                stream = fs.createReadStream(__dirname + '/../upload/temp/' + user + filename);
+                stream = fs.createReadStream(__dirname + '/../upload/temp/' + setFileName);
             console.log(2);
 
             stream.on('data', function (data) {
@@ -203,7 +210,7 @@ router.post('/new', function (req, res) {
 
                     } else {
                         res.send('file exists');
-                        console.log(filename + ' exists');
+                        console.log(setFileName + ' exists');
                     }
 
                 })
@@ -263,14 +270,17 @@ router.post('/checker', function (req, res) {
 router.post('/financial', function (req, res) {
 
     const user = 'user1' + '*';
-    let bank = req.query['bankname'];
-    console.log(bank);
+    let fileFullName = req.headers.extension;
+    console.log('files ', fileFullName);
 
     const busboy = new Busboy({headers: req.headers});
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-        console.log(fieldname);
+        console.log('field',fieldname);
+        let ext = "." + filename.toLowerCase().split('.').pop();
+        console.log('ext',ext)
+        let setFileName = fileFullName + ext;
 
-        const saveTo = path.join(__dirname, '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + user + filename);
+        const saveTo = path.join(__dirname, '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName);
         console.log(mimetype, encoding, fieldname);
         file.pipe(fs.createWriteStream(saveTo));
         busboy.on('finish', function () {
@@ -279,7 +289,7 @@ router.post('/financial', function (req, res) {
 
 
             const hash = crypto.createHash('md5'),
-                stream = fs.createReadStream(__dirname + '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + user + filename);
+                stream = fs.createReadStream(__dirname + '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName);
 
             stream.on('data', function (data) {
                 hash.update(data, 'utf8')
@@ -321,7 +331,7 @@ router.post('/financial', function (req, res) {
 
                     } else {
                         res.send('file exists');
-                        console.log(filename + ' exists');
+                        console.log('exists');
                     }
 
                 })
