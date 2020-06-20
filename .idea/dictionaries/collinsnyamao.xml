@@ -2,7 +2,9 @@
   <dictionary name="collinsnyamao">
     <words>
       <w>fieldname</w>
+      <w>microsoftcsvs</w>
       <w>newbank</w>
+      <w>sqldumps</w>
     </words>
   </dictionary>
 </component>

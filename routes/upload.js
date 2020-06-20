@@ -144,7 +144,8 @@ const upload = multer({storage: storage});
 
 router.post('/new', function (req, res) {
     const user = 'user1' + '*';
-    const time = req.body.time;
+    /*const userid = req.body.userID;
+    console.log('this user: ' + userid);*/
 
     const busboy = new Busboy({headers: req.headers});
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {

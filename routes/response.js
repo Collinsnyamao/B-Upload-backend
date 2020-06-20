@@ -7,7 +7,7 @@ const fs = require('fs');
 const watcher = chokidar.watch(__dirname + '/../upload/temp/', {ignored: /^\./, persistent: true});
 
 function movefile(originFile, destination, filename) {
-    fs.rename(__dirname + '/../upload/temp/' + originFile, __dirname + '/../upload/main/' + destination + '/' + filename, (err) => {
+    fs.rename(__dirname + '/../upload/temp/' + originFile, __dirname + '/../upload/sample/' + destination + '/' + filename, (err) => {
         if (err) throw err;
         console.log('Rename complete!');
         console.log(3);
@@ -55,7 +55,7 @@ watcher
 
                 /*Paul Mohammed*/
                 case 'csv':
-                    movefile(fileFullName, 'csv', fileFullName);
+                    movefile(fileFullName, 'microsoftcsvs', fileFullName);
                     break;
                 case 'xls':
                     movefile(fileFullName, 'excel', fileFullName);
@@ -64,22 +64,22 @@ watcher
                     movefile(fileFullName, 'excel', fileFullName);
                     break;
                 case 'bzip':
-                    movefile(fileFullName, 'compressed', fileFullName);
+                    movefile(fileFullName, 'sqldumps', fileFullName);
                     break;
                 case 'gzip':
-                    movefile(fileFullName, 'compressed', fileFullName);
+                    movefile(fileFullName, 'sqldumps', fileFullName);
                     break;
                 case 'gz':
-                    movefile(fileFullName, 'compressed', fileFullName);
+                    movefile(fileFullName, 'sqldumps', fileFullName);
                     break;
                 case 'sql':
-                    movefile(fileFullName, 'compressed', fileFullName);
+                    movefile(fileFullName, 'sqldumps', fileFullName);
                     break;
                 case 'bzip2':
-                    movefile(fileFullName, 'compressed', fileFullName);
+                    movefile(fileFullName, 'sqldumps', fileFullName);
                     break;
                 case 'pigz':
-                    movefile(fileFullName, 'compressed', fileFullName);
+                    movefile(fileFullName, 'sqldumps', fileFullName);
                     break;
 
                 /*Paul Mohammed*/
