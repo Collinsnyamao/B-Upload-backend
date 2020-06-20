@@ -7,7 +7,7 @@ const fs = require('fs');
 const watcher = chokidar.watch(__dirname + '/../upload/temp/', {ignored: /^\./, persistent: true});
 
 function movefile(originFile, destination, filename) {
-    fs.rename(__dirname + '/../upload/temp/' + originFile, __dirname + '/../upload/sample/' + destination + '/' + filename, (err) => {
+    fs.rename(__dirname + '/../upload/temp/' + originFile, __dirname + '/../upload/' + destination + '/' + filename, (err) => {
         if (err) throw err;
         console.log('Rename complete!');
         console.log(3);
@@ -30,63 +30,63 @@ watcher
             switch (fileExt) {
                 /*Nifi Mohammed*/
                 case 'jpg':
-                    movefile(fileFullName, 'media', fileFullName);
+                    movefile(fileFullName, 'main/media/', fileFullName);
                     break;
                 case 'png':
-                    movefile(fileFullName, 'media', fileFullName);
+                    movefile(fileFullName, 'main/media/', fileFullName);
                     break;
                 case 'pdf':
-                    movefile(fileFullName, 'media', fileFullName);
+                    movefile(fileFullName, 'main/media/', fileFullName);
                     break;
                 case 'jpeg':
-                    movefile(fileFullName, 'media', fileFullName);
+                    movefile(fileFullName, 'main/media/', fileFullName);
                     break;
                 case 'txt':
-                    movefile(fileFullName, 'media', fileFullName);
+                    movefile(fileFullName, 'main/media/', fileFullName);
                     break;
                 case 'doc':
-                    movefile(fileFullName, 'media', fileFullName);
+                    movefile(fileFullName, 'main/media/', fileFullName);
                     break;
                 case 'docx':
-                    movefile(fileFullName, 'media', fileFullName);
+                    movefile(fileFullName, 'main/media/', fileFullName);
                     break;
 
                 /*Nifi Mohammed*/
 
                 /*Paul Mohammed*/
                 case 'csv':
-                    movefile(fileFullName, 'microsoftcsvs', fileFullName);
+                    movefile(fileFullName, 'sample/microsoftcsvs/', fileFullName);
                     break;
                 case 'xls':
-                    movefile(fileFullName, 'excel', fileFullName);
+                    movefile(fileFullName, 'sample/excel/', fileFullName);
                     break;
                 case 'xlsx':
-                    movefile(fileFullName, 'excel', fileFullName);
+                    movefile(fileFullName, 'sample/excel/', fileFullName);
                     break;
                 case 'bzip':
-                    movefile(fileFullName, 'sqldumps', fileFullName);
+                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
                     break;
                 case 'gzip':
-                    movefile(fileFullName, 'sqldumps', fileFullName);
+                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
                     break;
                 case 'gz':
-                    movefile(fileFullName, 'sqldumps', fileFullName);
+                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
                     break;
                 case 'sql':
-                    movefile(fileFullName, 'sqldumps', fileFullName);
+                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
                     break;
                 case 'bzip2':
-                    movefile(fileFullName, 'sqldumps', fileFullName);
+                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
                     break;
                 case 'pigz':
-                    movefile(fileFullName, 'sqldumps', fileFullName);
+                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
                     break;
 
                 /*Paul Mohammed*/
 
 
                 default:
-                    movefile(fileFullName, 'other', fileFullName);
+                    movefile(fileFullName, 'main/other/', fileFullName);
                 /*case 'mp4':
                     movefile(fileFullName, 'media', fileFullName);
                     break;*/
