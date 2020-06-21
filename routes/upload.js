@@ -191,7 +191,7 @@ router.post('/new', function (req, res) {
                     if (document.length === 0) {
                         console.log('no data found');
                         let newChecksum = new ChecksumModel({
-                            filename: user + filename,
+                            filename: setFileName,
                             user: user,
                             checksum: checksumValue,
                             dateTime: Date.now(),
@@ -255,7 +255,8 @@ router.post('/checker', function (req, res) {
 
     const user = 'user1' + '*';
     let filename = req.body.filename;
-    let filename2 = user + req.body.filename;
+    let filename2 = req.body.filename;
+    console.log(filename2);
 
     ChecksumModel.findOne({filename: filename2}, function (err, result) {
         if (err) {
@@ -269,7 +270,7 @@ router.post('/checker', function (req, res) {
 
 router.post('/financial', function (req, res) {
 
-    const user = 'user1' + '*';
+
     let fileFullName = req.headers.extension;
     console.log('files ', fileFullName);
 
@@ -312,7 +313,7 @@ router.post('/financial', function (req, res) {
                     if (document.length === 0) {
                         console.log('no data found');
                         let newChecksum = new ChecksumModel({
-                            filename: user + filename,
+                            filename: setFileName,
                             user: user,
                             checksum: checksumValue,
                             dateTime: Date.now(),
