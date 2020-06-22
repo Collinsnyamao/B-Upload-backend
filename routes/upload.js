@@ -280,6 +280,8 @@ router.post('/financial', function (req, res) {
         let ext = "." + filename.toLowerCase().split('.').pop();
         console.log('ext',ext)
         let setFileName = fileFullName + ext;
+        let userstr =fileFullName.split('*');
+        let user = userstr[0];
 
         const saveTo = path.join(__dirname, '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName);
         console.log(mimetype, encoding, fieldname);
