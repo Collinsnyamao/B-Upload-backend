@@ -57,31 +57,31 @@ watcher
 
                 /*Paul Mohammed*/
                 case 'csv':
-                    movefile(fileFullName, 'sample/microsoftcsvs/', fileFullName);
+                    movefile(fileFullName, 'sample/csv/', fileFullName);
                     break;
                 case 'xls':
-                    movefile(fileFullName, 'sample/excel/', fileFullName);
+                    movefile(fileFullName, 'sample/microsoftcsvs/', fileFullName);
                     break;
                 case 'xlsx':
-                    movefile(fileFullName, 'sample/excel/', fileFullName);
+                    movefile(fileFullName, 'sample/microsoftcsvs/', fileFullName);
                     break;
                 case 'bzip':
-                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
+                    movefile(fileFullName, 'sample/sqlDumps/', fileFullName);
                     break;
                 case 'gzip':
-                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
+                    movefile(fileFullName, 'sample/sqlDumps/', fileFullName);
                     break;
                 case 'gz':
-                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
+                    movefile(fileFullName, 'sample/sqlDumps/', fileFullName);
                     break;
                 case 'sql':
-                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
+                    movefile(fileFullName, 'sample/sqlDumps/', fileFullName);
                     break;
                 case 'bzip2':
-                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
+                    movefile(fileFullName, 'sample/sqlDumps/', fileFullName);
                     break;
                 case 'pigz':
-                    movefile(fileFullName, 'sample/sqldumps/', fileFullName);
+                    movefile(fileFullName, 'sample/sqlDumps/', fileFullName);
                     break;
 
                 /*Paul Mohammed*/
