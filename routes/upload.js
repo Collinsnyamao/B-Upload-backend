@@ -187,7 +187,6 @@ router.post('/new', function (req, res) {
 
                 console.log('CHECKSUM :', checksumValue);
 
-                console.log('++++++++++++++++++++++++++++ [ saving data to db ] +++++++++++++++++++++++++++++++++');
                 ChecksumModel.find({checksum: checksumValue}, function (err, document) {
 
                     if (err) {
@@ -195,7 +194,7 @@ router.post('/new', function (req, res) {
                         res.send('error');
                     }
 
-                    console.log('DATA SIZE : ', document.length);
+                    console.log(' ', document.length);
 
                     if (document.length === 0) {
                         console.log('no data found');
