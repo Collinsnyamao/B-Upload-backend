@@ -146,26 +146,31 @@ router.post('/new', function (req, res) {
     const user = 'user1' + '*';
     const userID = req.headers.id;
     const userfile = req.body.fileWrite;
-    console.log(userID);
+    console.log('++++++++++++++++++++++++++++ [ ', userID ,' ] +++++++++++++++++++++++++++++++++');
 
     const busboy = new Busboy({headers: req.headers});
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-        console.log('new file is ' + userID+ filename);
+        console.log('++++++++++++++++++++++++++++ [ file received ] +++++++++++++++++++++++++++++++++');
+        console.log('NEW FILE : ' + userID+ filename);
 
         let ext = "." + filename.toLowerCase().split('.').pop();
-        console.log('ext',ext)
+        console.log('EXTENSION : ',ext)
         let setFileName = userID+ext;
-        console.log('new name ', setFileName)
+        console.log('NEW FILE NAME : ', setFileName)
 
+        console.log('++++++++++++++++++++++++++++ [ WRITING FILE TO TEMP ] +++++++++++++++++++++++++++++++++');
         const saveTo = path.join(__dirname, '/../upload/temp/' + setFileName);
         console.log(1);
-        console.log(mimetype, encoding, fieldname);
+        console.log('MIME TYPE : ' + mimetype,'\rENCODING : ' + encoding, '\r BANK NAME : ' + fieldname);
         file.pipe(fs.createWriteStream(saveTo));
         busboy.on('finish', function () {
 
-            console.log(filename, 'uploaded');
+            console.log('++++++++++++++++++++++++++++ [ file write finished ] +++++++++++++++++++++++++++++++++');
+
+            console.log( 'FILENAME : ',filename);
 
 
+            console.log('++++++++++++++++++++++++++++ [ Hashing file ] +++++++++++++++++++++++++++++++++');
             const hash = crypto.createHash('md5'),
                 stream = fs.createReadStream(__dirname + '/../upload/temp/' + setFileName);
             console.log(2);
@@ -173,12 +178,16 @@ router.post('/new', function (req, res) {
             stream.on('data', function (data) {
                 hash.update(data, 'utf8')
             })
+            console.log('++++++++++++++++++++++++++++ [ hashing complete ] +++++++++++++++++++++++++++++++++');
 
             stream.on('end', function () {
                 console.log();
                 let checksumValue = hash.digest('hex');
-                console.log('checksum is', checksumValue);
 
+
+                console.log('CHECKSUM :', checksumValue);
+
+                console.log('++++++++++++++++++++++++++++ [ saving data to db ] +++++++++++++++++++++++++++++++++');
                 ChecksumModel.find({checksum: checksumValue}, function (err, document) {
 
                     if (err) {
@@ -186,7 +195,7 @@ router.post('/new', function (req, res) {
                         res.send('error');
                     }
 
-                    console.log('data size ', document.length);
+                    console.log('DATA SIZE : ', document.length);
 
                     if (document.length === 0) {
                         console.log('no data found');
@@ -272,24 +281,28 @@ router.post('/financial', function (req, res) {
 
 
     let fileFullName = req.headers.extension;
-    console.log('files ', fileFullName);
+    console.log('FILE SHORT NAME : ', fileFullName);
 
     const busboy = new Busboy({headers: req.headers});
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-        console.log('field',fieldname);
+        console.log('BANK NAME :',fieldname);
         let ext = "." + filename.toLowerCase().split('.').pop();
-        console.log('ext',ext)
+        console.log('EXTENSION : ',ext)
         let setFileName = fileFullName + ext;
         let userstr =fileFullName.split('*');
         let user = userstr[0];
 
+        console.log('++++++++++++++++++++++++++++ [ writing file to bank folder ] +++++++++++++++++++++++++++++++++');
         const saveTo = path.join(__dirname, '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName);
-        console.log(mimetype, encoding, fieldname);
+        console.log('MIME TYPE : ' + mimetype,'\rENCODING : ' + encoding, '\r BANK NAME : ' + fieldname);
         file.pipe(fs.createWriteStream(saveTo));
         busboy.on('finish', function () {
 
             console.log(filename, 'uploaded');
+            console.log('++++++++++++++++++++++++++++ [ file write finished ] +++++++++++++++++++++++++++++++++');
 
+
+            console.log('++++++++++++++++++++++++++++ [ hashing checksum ] +++++++++++++++++++++++++++++++++');
 
             const hash = crypto.createHash('md5'),
                 stream = fs.createReadStream(__dirname + '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName);
@@ -299,9 +312,11 @@ router.post('/financial', function (req, res) {
             })
 
             stream.on('end', function () {
-                console.log();
+                console.log('++++++++++++++++++++++++++++ [ checksum generated ] +++++++++++++++++++++++++++++++++');
                 let checksumValue = hash.digest('hex');
-                console.log('checksum is', checksumValue);
+                console.log('CHECKSUM : ', checksumValue);
+
+                console.log('++++++++++++++++++++++++++++ [ saving to db ] +++++++++++++++++++++++++++++++++');
 
                 ChecksumModel.find({checksum: checksumValue}, function (err, document) {
 
@@ -310,7 +325,7 @@ router.post('/financial', function (req, res) {
                         res.send('error');
                     }
 
-                    console.log('data size ', document.length);
+                    console.log('DATA SIZE : ', document.length);
 
                     if (document.length === 0) {
                         console.log('no data found');
@@ -324,11 +339,11 @@ router.post('/financial', function (req, res) {
                         })
                             .save()
                             .then(function () {
-                                console.log('saved...');
+                                console.log('++++++++++++++++++++++++++++ [ SAVED ] +++++++++++++++++++++++++++++++++');
                                 res.send('file saved');
                             })
                             .catch(function (err) {
-                                console.log(err);
+                                console.log('----------------------------------------------------------\r', err);
                                 res.send('error found ');
                             });
 
