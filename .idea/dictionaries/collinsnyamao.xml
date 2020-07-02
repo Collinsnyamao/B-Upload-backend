@@ -3,8 +3,10 @@
     <words>
       <w>fieldname</w>
       <w>microsoftcsvs</w>
+      <w>mpesa</w>
       <w>newbank</w>
       <w>sqldumps</w>
+      <w>stanbic</w>
     </words>
   </dictionary>
 </component>

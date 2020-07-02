@@ -116,6 +116,8 @@ function getBankFolder(bankname) {
             return 'standard';
         case 'mpesa statement.':
             return 'mpesa';
+        case 'stanbic bank kenya.':
+            return 'stanbic';
         default:
             return 'unsorted';
     }
@@ -146,28 +148,28 @@ router.post('/new', function (req, res) {
     const user = 'user1' + '*';
     const userID = req.headers.id;
     const userfile = req.body.fileWrite;
-    console.log('++++++++++++++++++++++++++++ [ ', userID ,' ] +++++++++++++++++++++++++++++++++');
+    console.log('++++++++++++++++++++++++++++ [ ', userID, ' ] +++++++++++++++++++++++++++++++++');
 
     const busboy = new Busboy({headers: req.headers});
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
         console.log('++++++++++++++++++++++++++++ [ file received ] +++++++++++++++++++++++++++++++++');
-        console.log('NEW FILE : ' + userID+ filename);
+        console.log('NEW FILE : ' + userID + filename);
 
         let ext = "." + filename.toLowerCase().split('.').pop();
-        console.log('EXTENSION : ',ext)
-        let setFileName = userID+ext;
+        console.log('EXTENSION : ', ext)
+        let setFileName = userID + ext;
         console.log('NEW FILE NAME : ', setFileName)
 
         console.log('++++++++++++++++++++++++++++ [ WRITING FILE TO TEMP ] +++++++++++++++++++++++++++++++++');
         const saveTo = path.join(__dirname, '/../upload/temp/' + setFileName);
         console.log(1);
-        console.log('MIME TYPE : ' + mimetype,'\rENCODING : ' + encoding, '\r BANK NAME : ' + fieldname);
+        console.log('MIME TYPE : ' + mimetype, '\rENCODING : ' + encoding, '\r BANK NAME : ' + fieldname);
         file.pipe(fs.createWriteStream(saveTo));
         busboy.on('finish', function () {
 
             console.log('++++++++++++++++++++++++++++ [ file write finished ] +++++++++++++++++++++++++++++++++');
 
-            console.log( 'FILENAME : ',filename);
+            console.log('FILENAME : ', filename);
 
 
             console.log('++++++++++++++++++++++++++++ [ Hashing file ] +++++++++++++++++++++++++++++++++');
@@ -210,6 +212,12 @@ router.post('/new', function (req, res) {
                             .then(function () {
                                 console.log('saved...');
                                 res.send('file saved');
+                                /*save file*/
+                                fs.rename(__dirname + '/../upload/temp/' + setFileName, __dirname + '/../upload/passed/' + setFileName, (err) => {
+                                    if (err) throw err;
+                                    console.log('++++++++++++++++++++++++++++ [ file pass complete ] +++++++++++++++++++++++++++++++++');
+                                });
+
                             })
                             .catch(function (err) {
                                 console.log(err);
@@ -284,16 +292,16 @@ router.post('/financial', function (req, res) {
 
     const busboy = new Busboy({headers: req.headers});
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-        console.log('BANK NAME :',fieldname);
+        console.log('BANK NAME :', fieldname);
         let ext = "." + filename.toLowerCase().split('.').pop();
-        console.log('EXTENSION : ',ext)
+        console.log('EXTENSION : ', ext)
         let setFileName = fileFullName + ext;
-        let userstr =fileFullName.split('*');
+        let userstr = fileFullName.split('*');
         let user = userstr[0];
 
         console.log('++++++++++++++++++++++++++++ [ writing file to bank folder ] +++++++++++++++++++++++++++++++++');
-        const saveTo = path.join(__dirname, '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName);
-        console.log('MIME TYPE : ' + mimetype,'\rENCODING : ' + encoding, '\r BANK NAME : ' + fieldname);
+        const saveTo = path.join(__dirname + '/../upload/financialTemp/' + setFileName);
+        console.log('MIME TYPE : ' + mimetype, '\rENCODING : ' + encoding, '\r BANK NAME : ' + fieldname);
         file.pipe(fs.createWriteStream(saveTo));
         busboy.on('finish', function () {
 
@@ -304,7 +312,7 @@ router.post('/financial', function (req, res) {
             console.log('++++++++++++++++++++++++++++ [ hashing checksum ] +++++++++++++++++++++++++++++++++');
 
             const hash = crypto.createHash('md5'),
-                stream = fs.createReadStream(__dirname + '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName);
+                stream = fs.createReadStream(__dirname + '/../upload/financialTemp/' + setFileName);
 
             stream.on('data', function (data) {
                 hash.update(data, 'utf8')
@@ -340,6 +348,10 @@ router.post('/financial', function (req, res) {
                             .then(function () {
                                 console.log('++++++++++++++++++++++++++++ [ SAVED ] +++++++++++++++++++++++++++++++++');
                                 res.send('file saved');
+                                fs.rename(__dirname + '/../upload/financialTemp/' + setFileName, __dirname, '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName, (err) => {
+                                    if (err) throw err;
+                                    console.log('++++++++++++++++++++++++++++ [ file pass complete ] +++++++++++++++++++++++++++++++++');
+                                });
                             })
                             .catch(function (err) {
                                 console.log('----------------------------------------------------------\r', err);
@@ -365,14 +377,14 @@ router.post('/financial', function (req, res) {
 /*console.log(crypto.getHashes());*/
 /*console.log(__dirname);*/
 
-router.post('/clearDB', function (req,res){
+router.post('/clearDB', function (req, res) {
     const password = req.body.password;
-    if (password === 'tintin'){
-        ChecksumModel.deleteMany({ }, function (err) {
+    if (password === 'tintin') {
+        ChecksumModel.deleteMany({}, function (err) {
             if (err) res.send('not cleared');
             res.send('cleared')
         });
-    }else {
+    } else {
         res.send('wrong password');
     }
 });

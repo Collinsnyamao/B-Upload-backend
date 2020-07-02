@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 const chokidar = require('chokidar');
 const fs = require('fs');
 
-const watcher = chokidar.watch(__dirname + '/../upload/temp/', {ignored: /^\./, persistent: true});
+const watcher = chokidar.watch(__dirname + '/../upload/passed/', {ignored: /^\./, persistent: true});
 
 function movefile(originFile, destination, filename) {
     setTimeout(function (){
-        fs.rename(__dirname + '/../upload/temp/' + originFile, __dirname + '/../upload/' + destination + '/' + filename, (err) => {
+        fs.rename(__dirname + '/../upload/passed/' + originFile, __dirname + '/../upload/' + destination + '/' + filename, (err) => {
             if (err) throw err;
             console.log('Rename complete!');
             console.log(3);
