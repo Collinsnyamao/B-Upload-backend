@@ -10,7 +10,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 
-mongoose.connect('mongodb+srv://collinsnyamao:Sonofseed5@cluster0-2fmdl.mongodb.net/BigBlueDB?retryWrites=true&w=majority', {
+mongoose.connect('mongodb://localhost/BigBlueDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -21,6 +21,17 @@ db.once('open', function () {
     // we're connected!
     console.log('we\'re connected!');
 });
+
+
+/*const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://collinsnyamao:<password>@cluster0.p8hm6.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+    const collection = client.db("test").collection("devices");
+    // perform actions on the collection object
+    client.close();
+});*/
+
 
 const checksumSchema = new mongoose.Schema({
     filename: String,
@@ -36,7 +47,7 @@ const ChecksumModel = mongoose.model('ChecksumModel', checksumSchema);
 
 db.once('open', () => {
 
-    const checksumWatcher = db.collection('checksummodels');
+    /*const checksumWatcher = db.collection('checksummodels');
     const changeStream = checksumWatcher.watch();
 
     changeStream.on('change', (change) => {
@@ -52,7 +63,7 @@ db.once('open', () => {
         } else if (change.operationType === 'replace') {
 
         }
-    });
+    });*/
 })
 
 
