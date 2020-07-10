@@ -224,7 +224,7 @@ router.post('/new', function (req, res) {
                                 console.log('saved...');
                                 res.send('file saved');
                                 /*save file*/
-                                fs.rename(__dirname + '/../upload/temp/' + setFileName, __dirname + '/../upload/passed/' + setFileName, (err) => {
+                                fs.rename(__dirname + '/../upload/temp/' + setFileName, __dirname + '/../upload/passed/' + setFileName, function (err){
                                     if (err) throw err;
                                     console.log('++++++++++++++++++++++++++++ [ file pass complete ] +++++++++++++++++++++++++++++++++');
                                 });

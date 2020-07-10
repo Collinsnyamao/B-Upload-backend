@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://collinsnyamao:Sonofseed5@cluster0-2fmdl.mongodb.net/BigBlueDB?retryWrites=true&w=majority', {
+mongoose.connect('mongodb://localhost/BigBlueDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
