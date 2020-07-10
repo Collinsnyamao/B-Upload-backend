@@ -358,7 +358,7 @@ router.post('/financial', function (req, res) {
                             .save()
                             .then(function () {
                                 console.log('++++++++++++++++++++++++++++ [ SAVED ] +++++++++++++++++++++++++++++++++');
-                                res.send('file saved');
+                                console.log('file saved');
                                 fs.rename(__dirname + '/../upload/financialTemp/' + setFileName, __dirname, '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName, (err) => {
                                     if (err) throw err;
                                     console.log('++++++++++++++++++++++++++++ [ file pass complete ] +++++++++++++++++++++++++++++++++');
