@@ -129,6 +129,8 @@ function getBankFolder(bankname) {
             return 'mpesa';
         case 'stanbic bank kenya.':
             return 'stanbic';
+            case 'gulf african bank.':
+            return 'gulf';
         default:
             return 'unsorted';
     }
