@@ -129,8 +129,10 @@ function getBankFolder(bankname) {
             return 'mpesa';
         case 'stanbic bank kenya.':
             return 'stanbic';
-            case 'gulf african bank.':
+        case 'gulf african bank.':
             return 'gulf';
+        case 'national bank of kenya.':
+            return 'national';
         default:
             return 'unsorted';
     }
@@ -226,7 +228,7 @@ router.post('/new', function (req, res) {
                                 console.log('saved...');
                                 res.send('file saved');
                                 /*save file*/
-                                fs.rename(__dirname + '/../upload/temp/' + setFileName, __dirname + '/../upload/passed/' + setFileName, function (err){
+                                fs.rename(__dirname + '/../upload/temp/' + setFileName, __dirname + '/../upload/passed/' + setFileName, function (err) {
                                     if (err) throw err;
                                     console.log('++++++++++++++++++++++++++++ [ file pass complete ] +++++++++++++++++++++++++++++++++');
                                 });
@@ -361,7 +363,7 @@ router.post('/financial', function (req, res) {
                             .then(function () {
                                 console.log('++++++++++++++++++++++++++++ [ SAVED ] +++++++++++++++++++++++++++++++++');
                                 res.send('file saved');
-                                fs.rename(__dirname + '/../upload/financialTemp/' + setFileName, __dirname+ '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName, function (err) {
+                                fs.rename(__dirname + '/../upload/financialTemp/' + setFileName, __dirname + '/../upload/financialMain/' + getBankFolder(fieldname.toLowerCase()) + '/' + setFileName, function (err) {
                                     if (err) throw err;
                                     console.log('++++++++++++++++++++++++++++ [ file pass complete ] +++++++++++++++++++++++++++++++++');
                                 });
