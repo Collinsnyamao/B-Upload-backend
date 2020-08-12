@@ -404,4 +404,48 @@ router.post('/clearDB', function (req, res) {
     }
 });
 
+
+router.post('/checksum', function (request, response) {
+    ChecksumModel.find({}, function (err, docs) {
+        if (err){
+            console.log(err);
+            response.send(err);
+        }
+        else{
+            console.log("First function call : ", docs);
+            response.send(docs);
+        }
+    });
+})
+
+
+router.post('/simulate', function (request, response) {
+        ChecksumModel.updateMany(
+        { status: false },
+        { $set: { status: true } },
+        function(err, result) {
+            if (err) {
+                response.send(err);
+            } else {
+                response.send(result);
+            }
+        }
+    );
+})
+
+router.post('/simulateOne', function (request, response) {
+    let selectedID = request.body.id;
+        ChecksumModel.updateMany(
+        { _id: selectedID },
+        { $set: { status: true } },
+        function(err, result) {
+            if (err) {
+                response.send(err);
+            } else {
+                response.send(result);
+            }
+        }
+    );
+})
+
 module.exports = router;

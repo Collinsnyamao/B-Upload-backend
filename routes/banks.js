@@ -47,4 +47,17 @@ router.post('/list', function (req, res) {
     });
 });
 
+router.post('/delete', function (request, response) {
+    console.log(request.body.bankname);
+    banksModel.deleteMany({bankName: request.body.bankname}, function (err, docs) {
+        response.send(docs);
+    });
+})
+
+router.get('/list', function (req, res) {
+    banksModel.find({}, function (err, docs) {
+        res.send(docs);
+    });
+});
+
 module.exports = router;
