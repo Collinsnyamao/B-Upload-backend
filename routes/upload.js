@@ -138,6 +138,8 @@ function getBankFolder(bankname) {
     }
 }
 
+console.log(__dirname);
+
 /*createChecksum('123.xyz','acd1324sjx','5h5i4494j5','098292','xyz',false);*/
 
 /* GET users listing. */
