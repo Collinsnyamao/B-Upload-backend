@@ -162,7 +162,7 @@ const upload = multer({storage: storage});
 /*SET STORAGE*/
 
 router.post('/new', function (req, res) {
-    const user = 'user1' + '*';
+    const user = 'n/a' + '*';
     const userID = req.headers.id;
     const userfile = req.body.fileWrite;
     console.log('++++++++++++++++++++++++++++ [ ', userID, ' ] +++++++++++++++++++++++++++++++++');
@@ -171,9 +171,15 @@ router.post('/new', function (req, res) {
     busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
         console.log('++++++++++++++++++++++++++++ [ file received ] +++++++++++++++++++++++++++++++++');
         console.log('NEW FILE : ' + userID + filename);
+        filename = filename.trim();
+        filename = filename.replace(' ', '');
 
+        let pretext = filename.split('.');
+        let pretext1 = pretext[0].replace(/[^a-zA-Z ]/g, "")
         let ext = "." + filename.toLowerCase().split('.').pop();
-        console.log('EXTENSION : ', ext)
+
+        filename = pretext1+ ext;
+        console.log('EXTENSION : ', pretext1+ext)
         let setFileName = userID + ext;
         console.log('NEW FILE NAME : ', filename)
 
@@ -209,8 +215,8 @@ router.post('/new', function (req, res) {
                 ChecksumModel.find({checksum: checksumValue}, function (err, document) {
 
                     if (err) {
-                        console.log('error');
-                        res.send('error');
+                        console.log('error', err);
+                        /*res.send('error');*/
                     }
 
                     console.log(' ', document.length);
