@@ -175,10 +175,10 @@ router.post('/new', function (req, res) {
         let ext = "." + filename.toLowerCase().split('.').pop();
         console.log('EXTENSION : ', ext)
         let setFileName = userID + ext;
-        console.log('NEW FILE NAME : ', setFileName)
+        console.log('NEW FILE NAME : ', filename)
 
         console.log('++++++++++++++++++++++++++++ [ WRITING FILE TO TEMP ] +++++++++++++++++++++++++++++++++');
-        const saveTo = path.join(__dirname, '/../upload/temp/' + setFileName);
+        const saveTo = path.join(__dirname, '/../upload/temp/' + filename);
         console.log(1);
         console.log('MIME TYPE : ' + mimetype, '\rENCODING : ' + encoding, '\r BANK NAME : ' + fieldname);
         file.pipe(fs.createWriteStream(saveTo));
@@ -191,7 +191,7 @@ router.post('/new', function (req, res) {
 
             console.log('++++++++++++++++++++++++++++ [ Hashing file ] +++++++++++++++++++++++++++++++++');
             const hash = crypto.createHash('md5'),
-                stream = fs.createReadStream(__dirname + '/../upload/temp/' + setFileName);
+                stream = fs.createReadStream(__dirname + '/../upload/temp/' + filename);
             console.log(2);
 
             stream.on('data', function (data) {
@@ -218,7 +218,7 @@ router.post('/new', function (req, res) {
                     if (document.length === 0) {
                         console.log('no data found');
                         let newChecksum = new ChecksumModel({
-                            filename: setFileName,
+                            filename: filename,
                             user: user,
                             checksum: checksumValue,
                             dateTime: Date.now(),
@@ -230,7 +230,7 @@ router.post('/new', function (req, res) {
                                 console.log('saved...');
                                 res.send('file saved');
                                 /*save file*/
-                                fs.rename(__dirname + '/../upload/temp/' + setFileName, __dirname + '/../upload/passed/' + setFileName, function (err) {
+                                fs.rename(__dirname + '/../upload/temp/' + filename, __dirname + '/../upload/passed/' + filename, function (err) {
                                     if (err) throw err;
                                     console.log('++++++++++++++++++++++++++++ [ file pass complete ] +++++++++++++++++++++++++++++++++');
                                 });
@@ -243,7 +243,7 @@ router.post('/new', function (req, res) {
 
                     } else {
                         res.send('file exists');
-                        console.log(setFileName + ' exists');
+                        console.log(filename + ' exists');
                     }
 
                 })
