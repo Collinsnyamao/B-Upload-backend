@@ -175,7 +175,7 @@ router.post('/new', function (req, res) {
         filename = filename.replace(' ', '');
 
         let pretext = filename.split('.');
-        let pretext1 = pretext[0].replace(/[^a-zA-Z ]/g, "")
+        let pretext1 = pretext[0].replace(/[^a-zA-Z0-9-_ ]/g, "")
         let ext = "." + filename.toLowerCase().split('.').pop();
 
         filename = pretext1+ ext;
