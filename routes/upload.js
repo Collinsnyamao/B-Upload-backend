@@ -448,6 +448,11 @@ router.post('/simulateOne', function (request, response) {
             }
         }
     );
-})
+});
+
+/*router.post('/ping', function (request, response) {
+
+    response.send('available');
+});*/
 
 module.exports = router;

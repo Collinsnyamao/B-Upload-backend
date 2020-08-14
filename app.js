@@ -7,6 +7,7 @@ let cors = require('cors');
 let bodyParser = require('body-parser');
 const https = require('https');
 const fs = require('fs');
+const health = require('express-ping');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(health.ping());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
