@@ -14,6 +14,30 @@ const pusherRouter = require('./routes/pusher');
 const uploadRouter = require('./routes/upload');
 const responseRouter = require('./routes/response');
 const banksRouter = require('./routes/banks');
+const winston = require('winston');
+
+const log = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+        //
+        // - Write all logs with level `error` and below to `error.log`
+        // - Write all logs with level `info` and below to `combined.log`
+        //
+        new winston.transports.File({ filename: 'error.log', level: 'error' }),
+        new winston.transports.File({ filename: 'combined.log' }),
+    ],
+});
+
+process.on('uncaughtException', function (err) {
+    console.error(err);
+    console.log("Node NOT Exiting...");
+    log.log({
+        level: 'error',
+        message: err
+    });
+});
 
 const app = express();
 

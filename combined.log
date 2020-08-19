@@ -1,0 +1,2 @@
+{"level":"error","message":{"errno":-2,"code":"ENOENT","syscall":"open","path":"/Users/collinsnyamao/WebstormProjects/work/BigBlueUpload/BigBlue-upload-backend/upload/temp/BigBlue.pdf"},"service":"user-service"}
+{"level":"error","message":{"errno":-2,"code":"ENOENT","syscall":"open","path":"/Users/collinsnyamao/WebstormProjects/work/BigBlueUpload/BigBlue-upload-backend/upload/temp/BigBlueedit 4.jpg"},"service":"user-service"}
