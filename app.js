@@ -6,6 +6,7 @@ const logger = require('morgan');
 let cors = require('cors');
 let bodyParser = require('body-parser');
 const https = require('https');
+const health = require('express-ping')
 const fs = require('fs');
 
 const indexRouter = require('./routes/index');
@@ -49,6 +50,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(health.ping());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.json()); // support json encoded bodies
