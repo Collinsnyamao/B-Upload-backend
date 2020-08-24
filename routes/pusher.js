@@ -25,7 +25,7 @@ function folderCheck() {
         console.log('missing standard folder created!')
     }
     if (!fs.existsSync(__dirname+'/../upload/financialMain/' + 'mpesa' )){
-        fs.mkdirSync(__dirname+'/../upload/financia/lMain/' + 'mpesa');
+        fs.mkdirSync(__dirname+'/../upload/financialMain/' + 'mpesa');
         console.log('missing mpesa folder created!')
     }
     if (!fs.existsSync(__dirname+'/../upload/financialMain/' + 'stanbic' )){
