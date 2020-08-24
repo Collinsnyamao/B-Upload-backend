@@ -26,6 +26,15 @@ const log = winston.createLogger({
     ],
 });
 
+process.on('uncaughtException', function (err) {
+    console.error(err);
+    console.log("Node NOT Exiting...");
+    log.log({
+        level: 'error',
+        message: err
+    });
+});
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const pusherRouter = require('./routes/pusher');
