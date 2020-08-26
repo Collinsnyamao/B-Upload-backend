@@ -41,6 +41,7 @@ const pusherRouter = require('./routes/pusher');
 const uploadRouter = require('./routes/upload');
 const responseRouter = require('./routes/response');
 const banksRouter = require('./routes/banks');
+const statusRouter = require('./routes/status');
 
 const app = express();
 
@@ -65,6 +66,7 @@ app.use('/pusher', pusherRouter);
 app.use('/upload', uploadRouter);
 app.use('/response', responseRouter);
 app.use('/banks', banksRouter);
+app.use('/status', statusRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
